@@ -12,19 +12,20 @@ S = 0.8 + 0.7*sin(2*pi*50*t) + sin(2*pi*120*t);
 X = S + 2*randn(size(t));
 
 % Plot the noisy signal in the time domain. The frequency components are not visually apparent in the plot.
+figure
 plot(1000*t,X)
-grid on
-title("Signal Corrupted with Zero-Mean Random Noise")
 xlabel("t (milliseconds)")
 ylabel("X(t)")
+grid on
+title("Signal Corrupted with Zero-Mean Random Noise")
 
 % Compute the Fourier transform of the signal.
 Y = fft(X);
 
 % Because Fourier transforms involve complex numbers, plot the complex
 % magnitude of the fft spectrum.
+figure
 plot(Fs/L*(0:L-1),abs(Y),"LineWidth",3)
-grid on
 title("Complex Magnitude of fft Spectrum")
 xlabel("f (Hz)")
 ylabel("|fft(X)|")
@@ -39,7 +40,7 @@ For real signals, the fft spectrum is a two-sided spectrum, where the spectrum i
 in the negative frequencies. To show the fft spectrum in the positive and negative frequencies, you can use fftshift. For an even length of L, the 
 frequency domain starts from the negative of the Nyquist frequency -Fs/2 up to Fs/2-Fs/L with a spacing or frequency resolution of Fs/L.
 %}
-
+figure
 plot(Fs/L*(-L/2:L/2-1),abs(fftshift(Y)),"LineWidth",3)
 title("fft Spectrum in the Positive and Negative Frequencies")
 xlabel("f (Hz)")
@@ -61,6 +62,8 @@ P1(2:end-1) = 2*P1(2:end-1);
 % Define the frequency domain f for the single-sided spectrum. Plot the single-sided amplitude spectrum P1. As expected, the amplitudes are close to 0.8, 
 % 0.7, and 1, but they are not exact because of the added noise. In most cases, longer signals produce better frequency approximations.
 f = Fs/L*(0:(L/2));
+
+figure
 plot(f,P1,"LineWidth",3) 
 title("Single-Sided Amplitude Spectrum of X(t)")
 xlabel("f (Hz)")
@@ -72,6 +75,7 @@ P2 = abs(Y/L);
 P1 = P2(1:L/2+1);
 P1(2:end-1) = 2*P1(2:end-1);
 
+figure
 plot(f,P1,"LineWidth",3) 
 title("Single-Sided Amplitude Spectrum of S(t)")
 xlabel("f (Hz)")
