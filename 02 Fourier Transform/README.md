@@ -1,6 +1,6 @@
 ﻿# MATLAB Simulation Results
 
-The following data can be obtained running the main program 'A02_Multiple_SensorData_Analysis'. All other files are functions and must be inside the same folder (including Excel sheet).
+The following data corresponds to a private project and can be obtained running the main program 'A02_Multiple_SensorData_Analysis'. All other files are functions and must be inside the same folder (including the Excel sheet).
 
 ## 📌 Original Signals
 
