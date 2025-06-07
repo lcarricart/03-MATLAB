@@ -2,6 +2,7 @@
 % circuit using a sinusoidal source.
 
 %% Voltages in the series RC circuit
+clc, clearvars, close all
 
 j = sqrt(-1);
 V_amplitude = 5;        % V

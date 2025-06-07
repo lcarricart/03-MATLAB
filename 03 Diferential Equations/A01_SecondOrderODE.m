@@ -10,6 +10,8 @@
 % y(1) is y
 % y(2) is y'
 
+clc, clearvars, close all
+
 odefun = @(t, y) [y(2);
                  -2*y(2) - y(1)];
 

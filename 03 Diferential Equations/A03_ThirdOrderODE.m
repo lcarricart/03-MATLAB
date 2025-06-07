@@ -13,8 +13,8 @@ odefun = @(t, y) [ y(2);
                    ( -L1*y(3) - R*y(2) - (1/C)*y(1) ) / L2 ];
 
 % Define the time span and the initial conditions [i(0); i'(0); i''(0)]
-tspan = [0, 25];
-y0 = [0; 0; -100];
+tspan = [0, 100];
+y0 = [10; 0; -100];
 
 % Call MATLAB's ODE solver
 [t, y] = ode45(odefun, tspan, y0);

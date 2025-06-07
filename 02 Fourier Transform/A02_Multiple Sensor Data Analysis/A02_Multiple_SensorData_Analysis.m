@@ -1,37 +1,37 @@
 % Purpose of the program: Merge the previous programs A00_SensorData_Plots & A01_Single_SensorData_Analysis to iterate through all sensors.
 
-%% Definitions & Data reading
-
-% Define cells for every sensor { [data array], excelColumn, name }
-time_s_info         = { [],   'A', 'Time (s)' };
-accelerometerX_info = { [],   'B', 'Accelerometer X' };  accelerometerY_info = { [],   'C', 'Accelerometer Y' };  accelerometerZ_info = { [],   'D', 'Accelerometer Z' };
-gyroscopeX_info     = { [],   'E', 'Gyroscope X'     };  gyroscopeY_info     = { [],   'F', 'Gyroscope Y'     };  gyroscopeZ_info     = { [],   'G', 'Gyroscope Z'     };
-magnetometerX_info  = { [],   'H', 'Magnetometer X'  };  magnetometerY_info  = { [],   'I', 'Magnetometer Y'  };  magnetometerZ_info  = { [],   'J', 'Magnetometer Z'  };
-latitude_info       = { [],   'K', 'Latitude'        };  altitude_info       = { [],   'L', 'Altitude'        };  gpsAltitude_info    = { [],   'M', 'GPS Altitude'    };
-speed_info          = { [],   'N', 'Speed'           };  satCount_info       = { [],   'O', 'Satellite Count' };
-roll_info           = { [],   'P', 'Roll'            };  pitch_info          = { [],   'Q', 'Pitch'           };  yaw_info            = { [],   'R', 'Yaw'            }; 
-pressure_info       = { [],   'S', 'Pressure'        };  temperature_info    = { [],   'T', 'Temperature'     };  pAltitude_info      = { [],   'U', 'Pressure Altitude' };
-
-
-% Define a cell containing all sensors
-allSensors = {
-    accelerometerX_info,  accelerometerY_info,  accelerometerZ_info,  ...
-    gyroscopeX_info,    gyroscopeY_info,    gyroscopeZ_info,    ...
-    magnetometerX_info, magnetometerY_info, magnetometerZ_info, ...
-    latitude_info,      altitude_info,      gpsAltitude_info,   ...
-    speed_info,         satCount_info,                          ...
-    roll_info,          pitch_info,         yaw_info,           ...
-    pressure_info,      temperature_info,   pAltitude_info      ...
-};
-
-% READ Time
-time_ms = readData('A');
-time_ms = time_ms - time_ms(1);                 % adjust the reference
-time_hs = time_ms / 1000 / 60 / 60;             % time in hours
-time_s = time_ms / 1000;                        % time in seconds
-
-% READ Data from all sensors
-allSensors = readSensorsData(allSensors);
+% %% Definitions & Data reading
+% 
+% % Define cells for every sensor { [data array], excelColumn, name }
+% time_s_info         = { [],   'A', 'Time (s)' };
+% accelerometerX_info = { [],   'B', 'Accelerometer X' };  accelerometerY_info = { [],   'C', 'Accelerometer Y' };  accelerometerZ_info = { [],   'D', 'Accelerometer Z' };
+% gyroscopeX_info     = { [],   'E', 'Gyroscope X'     };  gyroscopeY_info     = { [],   'F', 'Gyroscope Y'     };  gyroscopeZ_info     = { [],   'G', 'Gyroscope Z'     };
+% magnetometerX_info  = { [],   'H', 'Magnetometer X'  };  magnetometerY_info  = { [],   'I', 'Magnetometer Y'  };  magnetometerZ_info  = { [],   'J', 'Magnetometer Z'  };
+% latitude_info       = { [],   'K', 'Latitude'        };  altitude_info       = { [],   'L', 'Altitude'        };  gpsAltitude_info    = { [],   'M', 'GPS Altitude'    };
+% speed_info          = { [],   'N', 'Speed'           };  satCount_info       = { [],   'O', 'Satellite Count' };
+% roll_info           = { [],   'P', 'Roll'            };  pitch_info          = { [],   'Q', 'Pitch'           };  yaw_info            = { [],   'R', 'Yaw'            }; 
+% pressure_info       = { [],   'S', 'Pressure'        };  temperature_info    = { [],   'T', 'Temperature'     };  pAltitude_info      = { [],   'U', 'Pressure Altitude' };
+% 
+% 
+% % Define a cell containing all sensors
+% allSensors = {
+%     accelerometerX_info,  accelerometerY_info,  accelerometerZ_info,  ...
+%     gyroscopeX_info,    gyroscopeY_info,    gyroscopeZ_info,    ...
+%     magnetometerX_info, magnetometerY_info, magnetometerZ_info, ...
+%     latitude_info,      altitude_info,      gpsAltitude_info,   ...
+%     speed_info,         satCount_info,                          ...
+%     roll_info,          pitch_info,         yaw_info,           ...
+%     pressure_info,      temperature_info,   pAltitude_info      ...
+% };
+% 
+% % READ Time
+% time_ms = readData('A');
+% time_ms = time_ms - time_ms(1);                 % adjust the reference
+% time_hs = time_ms / 1000 / 60 / 60;             % time in hours
+% time_s = time_ms / 1000;                        % time in seconds
+% 
+% % READ Data from all sensors
+% allSensors = readSensorsData(allSensors);
 
 %% Plotting Original & No-offset Signals
 
