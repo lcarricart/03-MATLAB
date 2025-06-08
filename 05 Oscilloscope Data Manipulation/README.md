@@ -4,4 +4,4 @@ The following data corresponds to the output characteristics of a transistor tha
 
 ## 📌 Family of Output Characteristics
 
-![TransistorCharacteristics](E1_FamilyCharacteristics_Final_.png)
+![TransistorCharacteristics](E1_FamilyCharacteristics_Final.png)
