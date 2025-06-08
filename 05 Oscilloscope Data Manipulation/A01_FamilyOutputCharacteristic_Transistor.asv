@@ -4,6 +4,7 @@
 %% Multiple files
 NUMBER_OF_FILES = 8;
 colors = lines(NUMBER_OF_FILES);
+R  = 10e3;                 % 10 kΩ
 
 % Clears out the screen and figures
 clc;
@@ -28,17 +29,23 @@ for i = 0:(NUMBER_OF_FILES - 1)
     % disp(T(1:min(5,height(T)), 1:min(5,width(T))));
 end
 
-for i = 1:2:NUMBER_OF_FILES
+figure;
+for i = 1:(NUMBER_OF_FILES - 2)
     T = allData{i};
     x = T{:,2};
     y = T{:,3};
 
-    txt = sprintf('Family of Output Characteristics, step %d', i);
+    % In this laboratory, Y was measured to be the voltage over a resistor, to later calculate its current.
+    y  = y / R;              
+    I_mA = I * 1e3;            
 
-    figure;
-    plot(x, y, '.-', 'Color', colors(i, ), 'LineWidth',0.6, 'MarkerSize',5);
+    txt = sprintf('Family of Output Characteristics');
+
+    plot(x, y, '.-', 'Color', colors(i,:), 'LineWidth',0.6, 'MarkerSize',5);
     hold on;
 end
 
+xlabel('U_{CE} []');
+ylabel('I{C} []');
 hold off;
 title(txt);
