@@ -1,8 +1,8 @@
-Ib = [1.04, 1.46, 2.55, 3.13, 3.99, 9.04, 12.82, 18.84];    % Base current I_B (µA)
-Ic = [45,   59,   89,   103,   122,  209,   365,   446];   % Collector current I_C (µA)
+x = [669 700 740 790 821 852];                  % Drain Source Voltage (mV)
+y = [0.080 0.164 0.382 0.880 1.170 1.960];      % Drain Current (mA)
 
 figure
-plot(Ib, Ic, '.-', 'LineWidth', 1, 'MarkerSize', 8)
-xlabel('Base Current I_B (µA)')
-ylabel('Collector Current I_C (µA)')
+plot(x, y, '.-', 'LineWidth', 4, 'MarkerSize', 8)
+xlabel('Drain Source Voltage (mV)')
+ylabel('Drain Current (mA)')
 grid on
