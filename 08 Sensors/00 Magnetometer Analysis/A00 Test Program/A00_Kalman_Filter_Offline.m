@@ -73,7 +73,7 @@ for i = 1:(NUMBER_OF_FILES)
     %% Kalman Filter
  
     % 1) Fit the ellipsoid
-    [b, C] = ellipsoidFit(x, y, z);
+    [b, C] = A01_ellipsoidFit(x, y, z);
 
     fprintf("Estimated hard-iron offset for example %d (µT): [%.2f, %.2f, %.2f]\n", i, b);
     disp("Soft-iron matrix C:");
