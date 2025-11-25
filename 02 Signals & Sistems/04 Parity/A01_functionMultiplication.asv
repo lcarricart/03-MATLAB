@@ -1,0 +1,21 @@
+%% Purpose of the program: define even and odd functions to demonstrate parity rules
+
+% Functions definition. h(x) should be odd
+f = @(x) 2.*x.^2;
+g = @(x) 3.*x.^3;
+h = @(x) g(x).*f(x);
+
+% Define the time domain. 400 divisions
+x = linspace(-5, 5, 400);
+
+% Simple mathematics [f(2)=8 g(2)=24 h(2)=192]
+disp([f(2), g(2), h(2)]);
+
+% Plot
+figure;
+plot(x, f(x), 'LineWidth', 1.5); hold on;
+plot(x, g(x), '--', 'LineWidth', 1.5);
+plot(x, h(x),  ':', 'LineWidth', 1.5);
+grid on; xlabel('x'); ylabel('y');
+legend('f(x) = 2x^2', 'g(x)=3x^3', 'h(x)=f(x).g(x)');
+title('Plots of f, g, and h');

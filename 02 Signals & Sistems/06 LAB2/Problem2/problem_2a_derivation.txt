@@ -1,0 +1,103 @@
+PROBLEM 2(a) - DERIVATION OF FOURIER SERIES COEFFICIENTS
+==========================================================
+
+Square Wave Definition:
+    x(t) = +1  for 0 < t < T₀/2
+    x(t) = -1  for T₀/2 < t < T₀
+    Period: T₀ = 1/f₀
+
+FOURIER SERIES FORMULA:
+-----------------------
+    x(t) = a₀ + Σ[aₖ·cos(2πkf₀t) + bₖ·sin(2πkf₀t)]
+
+Where:
+    a₀ = (1/T₀)∫₀^T₀ x(t) dt                    [DC component]
+    aₖ = (2/T₀)∫₀^T₀ x(t)·cos(2πkf₀t) dt       [Cosine coefficients]
+    bₖ = (2/T₀)∫₀^T₀ x(t)·sin(2πkf₀t) dt       [Sine coefficients]
+
+STEP 1: Calculate a₀ (DC Component)
+------------------------------------
+    a₀ = (1/T₀)∫₀^T₀ x(t) dt
+    
+    a₀ = (1/T₀)[∫₀^(T₀/2) (+1) dt + ∫_(T₀/2)^T₀ (-1) dt]
+    
+    a₀ = (1/T₀)[T₀/2 - T₀/2]
+    
+    a₀ = 0
+
+The DC component is zero because the signal is symmetric around zero.
+
+STEP 2: Calculate aₖ (Cosine Coefficients)
+-------------------------------------------
+    aₖ = (2/T₀)∫₀^T₀ x(t)·cos(2πkf₀t) dt
+    
+    aₖ = (2/T₀)[∫₀^(T₀/2) (+1)·cos(2πkf₀t) dt + ∫_(T₀/2)^T₀ (-1)·cos(2πkf₀t) dt]
+
+For the first integral:
+    ∫₀^(T₀/2) cos(2πkf₀t) dt = [sin(2πkf₀t)/(2πkf₀)]₀^(T₀/2)
+                                = sin(πk)/(2πkf₀)
+                                = 0  (since sin(πk)=0 for all integers k)
+
+For the second integral:
+    ∫_(T₀/2)^T₀ cos(2πkf₀t) dt = [sin(2πkf₀t)/(2πkf₀)]_(T₀/2)^T₀
+                                 = [sin(2πk) - sin(πk)]/(2πkf₀)
+                                 = 0
+
+Therefore: aₖ = 0 for all k
+
+The cosine coefficients are zero because the square wave is an odd function
+(shifted to be odd around t=T₀/2).
+
+STEP 3: Calculate bₖ (Sine Coefficients)
+-----------------------------------------
+    bₖ = (2/T₀)∫₀^T₀ x(t)·sin(2πkf₀t) dt
+    
+    bₖ = (2/T₀)[∫₀^(T₀/2) (+1)·sin(2πkf₀t) dt + ∫_(T₀/2)^T₀ (-1)·sin(2πkf₀t) dt]
+
+For the first integral:
+    ∫₀^(T₀/2) sin(2πkf₀t) dt = [-cos(2πkf₀t)/(2πkf₀)]₀^(T₀/2)
+                                = [-cos(πk) + 1]/(2πkf₀)
+                                = [1 - cos(πk)]/(2πkf₀)
+
+For the second integral:
+    ∫_(T₀/2)^T₀ sin(2πkf₀t) dt = [cos(2πkf₀t)/(2πkf₀)]_(T₀/2)^T₀
+                                 = [cos(πk) - cos(2πk)]/(2πkf₀)
+                                 = [cos(πk) - 1]/(2πkf₀)
+
+Combining both integrals:
+    bₖ = (2/T₀) · (T₀/2πk) · [1 - cos(πk) + cos(πk) - 1]
+    
+Wait, let me recalculate more carefully:
+
+    bₖ = (2/T₀)[∫₀^(T₀/2) sin(2πkf₀t) dt - ∫_(T₀/2)^T₀ sin(2πkf₀t) dt]
+
+Let ω₀ = 2πf₀ = 2π/T₀
+
+    First integral:  [-cos(kω₀t)/(kω₀)]₀^(T₀/2) = [1 - cos(kπ)]/(kω₀)
+    Second integral: [-cos(kω₀t)/(kω₀)]_(T₀/2)^T₀ = [cos(kπ) - cos(2kπ)]/(kω₀)
+                                                     = [cos(kπ) - 1]/(kω₀)
+
+    bₖ = (2/T₀) · (1/(kω₀)) · [1 - cos(kπ) - cos(kπ) + 1]
+    bₖ = (2/T₀) · (1/(kω₀)) · [2 - 2cos(kπ)]
+    bₖ = (2/T₀) · (T₀/(2πk)) · 2[1 - cos(kπ)]
+    bₖ = (2/(πk)) · [1 - cos(kπ)]
+
+Now, cos(kπ) = (-1)^k:
+    - For k odd: cos(kπ) = -1, so [1 - (-1)] = 2
+    - For k even: cos(kπ) = +1, so [1 - (+1)] = 0
+
+Therefore:
+    bₖ = 4/(πk)  for k odd (k = 1, 3, 5, 7, ...)
+    bₖ = 0       for k even (k = 2, 4, 6, 8, ...)
+
+FINAL RESULT:
+=============
+    a₀ = 0
+    aₖ = 0  for all k
+    bₖ = 4/(πk)  for odd k
+    bₖ = 0       for even k
+
+FOURIER SERIES:
+    x(t) = (4/π)[sin(2πf₀t) + (1/3)sin(6πf₀t) + (1/5)sin(10πf₀t) + ...]
+    
+    x(t) = Σ [4/(π·k)]·sin(2πkf₀t)  where k = 1, 3, 5, 7, ... (odd only)

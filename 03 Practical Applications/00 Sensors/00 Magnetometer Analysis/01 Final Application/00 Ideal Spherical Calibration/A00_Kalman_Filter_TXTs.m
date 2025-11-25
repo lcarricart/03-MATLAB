@@ -54,18 +54,7 @@ title('Raw 3-D Representations')
 [b,C] = A01_ellipsoidFit(x_calib,y_calib,z_calib);
 Bmag = median( vecnorm(Mcorr) );                  % Median of |B| over all samples
 Mcorr = C*( [x_calib y_calib z_calib]' - b );     % Normalized magnetometer values (plots a range of -1 to 1)
-mUnit = (Mcorr / Bmag)';                          % Unnormalized magnetom values (plots the real range)
-Xc = mUnit(1,:).';  Yc = mUnit(2,:).';  Zc = mUnit(3,:).';
-
-Mcorr = C * ([x_calib  y_calib  z_calib]' - b);     % 3 × N, still in µT
-Mcorr = Mcorr.';                                    % N × 3 for easier handling
-
-% keep a descriptive name for the un-normalised set
-Bcal = Mcorr;                                       % N × 3, µT  (no scaling)
-
-% ------------ optional normalisation -----------------------------------
-Bmag  = median( vecnorm(Bcal, 2, 2) );              % robust radius in µT
-mUnit = Bcal / Bmag;  
+Xc = Mcorr(1,:).';  Yc = Mcorr(2,:).';  Zc = Mcorr(3,:).';
 
 nexttile(4)
 scatter3(Xc,Yc,Zc,6,'filled','MarkerFaceColor',[1 0 0])
@@ -74,7 +63,7 @@ title('Calibrated 3-D Representations')
 
 nexttile(2)
 axis off
-txt = sprintf(['Hard-iron (\\muT):\n' ...
+txt = sprintf(['Hard-iron b (\\muT):\n' ...
                '[%.2f %.2f %.2f]\n',...
                'Soft-iron C:\n' ...
                '[% .3f % .3f % .3f]\n' ...

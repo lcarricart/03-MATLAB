@@ -1,0 +1,74 @@
+PROBLEM 1(a) - GRAPHICAL SOLUTION (WITHOUT MATLAB)
+==================================================
+
+Given Signal x(t):
+    x(t) = 0     for t < 0
+    x(t) = 0.5   for t = 0
+    x(t) = 1     for t > 0
+
+This is a unit step function with x(0) = 0.5
+
+STEP 1: Find x(-t)
+------------------
+To find x(-t), we flip the signal around t=0:
+    x(-t) = 1     for t < 0  (because x(t)=1 for t>0)
+    x(-t) = 0.5   for t = 0  (x(0) remains the same)
+    x(-t) = 0     for t > 0  (because x(t)=0 for t<0)
+
+STEP 2: Calculate Even Part x_e(t) = 0.5 × [x(t) + x(-t)]
+----------------------------------------------------------
+For t < 0:
+    x_e(t) = 0.5 × [0 + 1] = 0.5
+
+For t = 0:
+    x_e(0) = 0.5 × [0.5 + 0.5] = 0.5
+
+For t > 0:
+    x_e(t) = 0.5 × [1 + 0] = 0.5
+
+Result: x_e(t) = 0.5 for all t (constant!)
+
+STEP 3: Calculate Odd Part x_o(t) = 0.5 × [x(t) - x(-t)]
+---------------------------------------------------------
+For t < 0:
+    x_o(t) = 0.5 × [0 - 1] = -0.5
+
+For t = 0:
+    x_o(0) = 0.5 × [0.5 - 0.5] = 0
+
+For t > 0:
+    x_o(t) = 0.5 × [1 - 0] = 0.5
+
+Result: x_o(t) = -0.5 for t<0, x_o(0)=0, x_o(t)=0.5 for t>0
+
+VERIFICATION: x(t) = x_e(t) + x_o(t)
+------------------------------------
+For t < 0:
+    x_e + x_o = 0.5 + (-0.5) = 0 ✓
+
+For t = 0:
+    x_e + x_o = 0.5 + 0 = 0.5 ✓
+
+For t > 0:
+    x_e + x_o = 0.5 + 0.5 = 1 ✓
+
+GRAPHICAL REPRESENTATION:
+-------------------------
+x(t):           |
+         1  ----●●●●●●●
+       0.5  ----●
+         0  ●●●●|
+                t=0
+
+x_e(t):         |
+       0.5  ●●●●●●●●●●●
+         0      |
+                t=0
+(Even function: symmetric about vertical axis)
+
+x_o(t):         |
+       0.5      |●●●●●●●
+         0  ----|
+      -0.5  ●●●●|
+                t=0
+(Odd function: symmetric about origin)

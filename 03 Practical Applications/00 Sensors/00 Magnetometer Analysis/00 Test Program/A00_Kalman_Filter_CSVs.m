@@ -41,6 +41,33 @@ for i = 1:(NUMBER_OF_FILES)
     y = T{:,5};
     z = T{:,6};    
 
+    % ---------- robust ellipsoid fit ---------------------------------------
+    maxIter = 5;
+    keep    = true(size(x));                 % start with everything
+    
+    for k = 1:maxIter
+        [b,C] = A01_ellipsoidFit( x(keep), y(keep), z(keep) );
+    
+        % Mahalanobis distance in the calibrated space
+        Mraw  = [x y z]';
+        Mcorr = C * (Mraw - b);
+        d     = vecnorm(Mcorr)';             % distance from centre
+    
+        % compute median + 3×MAD of distances
+        dMed  = median(d(keep));
+        dMad  = mad(d(keep),1);
+    
+        newKeep = d < dMed + 3*dMad;         % inside the 3-MAD shell
+    
+        % stop if nothing changes
+        if all(newKeep == keep), break, end
+        keep = newKeep;
+    end
+
+    % Now I create the new calibrated vectors discarding the spikes
+    x_calib = x(keep);  y_calib = y(keep);  z_calib = z(keep);
+    % ------------------------------------------------------------------------
+
     % Time
     time_us = T{:,1};
     time_us = time_us - time_us(1);
@@ -61,7 +88,7 @@ for i = 1:(NUMBER_OF_FILES)
     legend({'magX','magY','magZ'}, 'Location','best');
     
     %% Raw 3D
-    nexttile(3);
+    nexttile(2);
     scatter3(x, y, z, 20, 'b', '.');   % 5-point size, dot marker
     axis equal;                  % ensure X, Y, Z axes use the same scale
     grid on;
@@ -70,17 +97,27 @@ for i = 1:(NUMBER_OF_FILES)
     zlabel('Z (µT)');
     title("Raw 3D Representations");
 
+    %% Calib 3D
+    nexttile(3);
+    scatter3(x_calib, y_calib, z_calib, 20, 'b', '.');   % 5-point size, dot marker
+    axis equal;                  % ensure X, Y, Z axes use the same scale
+    grid on;
+    xlabel('X (µT)');
+    ylabel('Y (µT)');
+    zlabel('Z (µT)');
+    title("Calib 3D Representations");
+
     %% Kalman Filter
  
     % 1) Fit the ellipsoid
-    [b, C] = A01_ellipsoidFit(x, y, z);
+    [b, C] = A01_ellipsoidFit(x_calib, y_calib, z_calib);
 
     fprintf("Estimated hard-iron offset for example %d (µT): [%.2f, %.2f, %.2f]\n", i, b);
     disp("Soft-iron matrix C:");
     disp(C);
 
     % 2) Apply calibration
-    Mraw = [x, y, z]';
+    Mraw = [x_calib, y_calib, z_calib]';
     Mcorr = C * (Mraw - b);
 
     Xc = Mcorr(1,:)'; 
@@ -90,31 +127,31 @@ for i = 1:(NUMBER_OF_FILES)
     nexttile(4);
     scatter3(Xc, Yc, Zc, 20, 'r', '.'); 
     axis equal; 
-    title("Calibrated 3D Representations");
+    title("Filtered 3D Representations");
     xlabel("X (µT)"); 
     ylabel("Y (µT)"); 
     zlabel("Z (µT)"); 
     grid on;
 
     %% Table with Kalman Filter information
-    nexttile(2);
-
-    axis off
-
-    % build the two lines of text
-    msg1 = sprintf("Hard-iron offset (µT): [%.2f, %.2f, %.2f]", b(1), b(2), b(3));
-    % format the 3×3 matrix on one or more lines
-    msg2 = sprintf("Soft-iron C:\n  [%.3f  %.3f  %.3f]\n  [%.3f  %.3f  %.3f]\n  [%.3f  %.3f  %.3f]", ...
-                   C(1,1),C(1,2),C(1,3), ...
-                   C(2,1),C(2,2),C(2,3), ...
-                   C(3,1),C(3,2),C(3,3));
-    
-    % place the text centered in that tile
-    text(0.5, 0.7, msg1, 'Units','normalized', ...
-         'HorizontalAlignment','center','FontSize',10);
-    text(0.5, 0.3, msg2, 'Units','normalized', ...
-         'HorizontalAlignment','center','FontSize',10);
-
-    title("Calibration Points");
-end
+%     nexttile(2);
+% 
+%     axis off
+% 
+%     % build the two lines of text
+%     msg1 = sprintf("Hard-iron offset (µT): [%.2f, %.2f, %.2f]", b(1), b(2), b(3));
+%     % format the 3×3 matrix on one or more lines
+%     msg2 = sprintf("Soft-iron C:\n  [%.3f  %.3f  %.3f]\n  [%.3f  %.3f  %.3f]\n  [%.3f  %.3f  %.3f]", ...
+%                    C(1,1),C(1,2),C(1,3), ...
+%                    C(2,1),C(2,2),C(2,3), ...
+%                    C(3,1),C(3,2),C(3,3));
+% 
+%     % place the text centered in that tile
+%     text(0.5, 0.7, msg1, 'Units','normalized', ...
+%          'HorizontalAlignment','center','FontSize',10);
+%     text(0.5, 0.3, msg2, 'Units','normalized', ...
+%          'HorizontalAlignment','center','FontSize',10);
+% 
+%     title("Calibration Points");
+ end
 
