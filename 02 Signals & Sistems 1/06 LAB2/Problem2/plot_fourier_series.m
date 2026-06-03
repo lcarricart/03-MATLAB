@@ -71,7 +71,7 @@ axis([min(t), max(t), -1.5, 1.5]);
 % Plot 2: Fourier Series Approximation
 subplot(1, 2, 2);
 hold on;
-stem(t, x_fourier, 'r', 'LineStyle', 'none', 'LineWidth', 2);
+stem(t, x_fourier, 'r', 'LineWidth', 2);
 yline(0, 'k-', 'LineWidth', 0.5);
 xline(0, 'k-', 'LineWidth', 0.5);
 hold off;
